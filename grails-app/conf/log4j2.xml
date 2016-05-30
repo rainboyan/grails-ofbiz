@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="60">
+    <Appenders>
+        <Console name="stdout" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${sys:PID} --- [%t] %-40.40c{1.} : %m%n%xwEx"/>
+        </Console>
+        <Async name="async">
+            <AppenderRef ref="stdout"/>
+        </Async>
+    </Appenders>
+    <Loggers>
+        <logger name="org.ofbiz.base.converter.Converters" level="warn"/>
+        <logger name="org.ofbiz" level="debug"/>
+        <logger name="org.apache" level="warn"/>
+        <logger name="freemarker" level="warn"/>
+
+        <Root level="all">
+            <AppenderRef ref="async"/>
+        </Root>
+    </Loggers>
+</Configuration>

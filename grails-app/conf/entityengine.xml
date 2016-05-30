@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+This file configures the OFBiz Entity Engine uses to store persist data in a datasource.
+
+Normally, you will only need to edit the 'field-type-name' attribute of the <datasource> tag, near the bottom of this
+file.
+
+Less commonly, you may wish to change then JNDI lookup paths for:
+ - the Transaction Manager (<transaction-factory> element)
+ -  Database connection (<jndi-jdbc> element).
+
+If you not using the 12 preconfigured DBs, you may also need to add your own field type definition
+-->
+<entity-config>
+    <resource-loader name="maincp" class="org.ofbiz.base.config.ClasspathLoader"/>
+
+    <transaction-factory class="org.ofbiz.geronimo.GeronimoTransactionFactory"/>
+
+    <!--transaction-factory class="org.ofbiz.core.entity.transaction.JNDIFactory">
+      <user-transaction-jndi jndi-server-name="default" jndi-name="java:comp/env/UserTransaction"/>
+      <transaction-manager-jndi jndi-server-name="default" jndi-name="java:comp/env/UserTransaction"/>
+    </transaction-factory-->
+
+	<connection-factory class="org.ofbiz.entity.connection.DBCPConnectionFactory"/>
+
+	<debug-xa-resources value="false" />
+
+    <delegator name="default" entity-model-reader="main" entity-group-reader="main" entity-eca-enabled="false" distributed-cache-clear-enabled="false">
+        <group-map group-name="default" datasource-name="defaultDS"/>
+    </delegator>
+
+    <entity-model-reader name="main">
+        <resource loader="maincp" location="entitydefs/entitymodel.xml"/>
+    </entity-model-reader>
+
+    <entity-group-reader name="main">
+        <resource loader="maincp" location="entitydefs/entitygroup.xml"/>
+    </entity-group-reader>
+
+    <field-type name="hsql" loader="maincp" location="entitydefs/fieldtypehsql.xml"/>
+    <field-type name="derby" loader="maincp" location="entitydefs/fieldtypederby.xml"/>
+    <field-type name="daffodil" loader="maincp" location="entitydefs/fieldtypedaffodil.xml"/>
+    <field-type name="axion" loader="maincp" location="entitydefs/fieldtypeaxion.xml"/>
+    <field-type name="mysql" loader="maincp" location="entitydefs/fieldtypemysql.xml"/>
+    <field-type name="postgres" loader="maincp" location="entitydefs/fieldtypepostgres.xml"/>
+    <field-type name="oracle" loader="maincp" location="entitydefs/fieldtypeoracle.xml"/>
+    <field-type name="sapdb" loader="maincp" location="entitydefs/fieldtypesapdb.xml"/>
+    <field-type name="sybase" loader="maincp" location="entitydefs/fieldtypesybase.xml"/>
+    <field-type name="firebird" loader="maincp" location="entitydefs/fieldtypefirebird.xml"/>
+    <field-type name="mssql" loader="maincp" location="entitydefs/fieldtypemssql.xml"/>
+    <field-type name="advantage" loader="maincp" location="entitydefs/fieldtypeadvantage.xml"/>
+
+    <!--
+
+    DATASOURCE
+
+    You should no longer define a datasource in this file, the database is now configured through the UI at setup time.
+    The only time you would want to configure it here is when you migrate from an older version and need to point the
+    new installation at an existing db. This is considered a legacy method and will not work if dbconfig.xml exists
+    in the home directory.
+     -->
+    <datasource name="defaultDS"
+            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+            field-type-name="mysql"
+            check-on-start="true"
+            add-missing-on-start="true"
+            check-pks-on-start="false"
+            use-foreign-keys="true"
+            join-style="ansi-no-parenthesis"
+            alias-view-columns="false"
+            drop-fk-use-foreign-key-keyword="true"
+            table-type="InnoDB"
+            character-set="utf8"
+            collate="utf8_general_ci">
+        <inline-jdbc
+                jdbc-driver="com.mysql.jdbc.Driver"
+                jdbc-uri="jdbc:mysql://127.0.0.1/ofbiz_bootful?autoReconnect=true"
+                jdbc-username="ofbiz"
+                jdbc-password="ofbiz"
+                isolation-level="ReadCommitted"
+                pool-minsize="2"
+                pool-maxsize="250"
+                time-between-eviction-runs-millis="600000"/>
+    </datasource>
+</entity-config>

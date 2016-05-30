@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+
+    <title>Entity of an Apache OFBiz Component</title>
+    <description>None</description>
+    <version>1.0</version>
+
+    <entity entity-name="SequenceValueItem" 
+            package-name="org.ofbiz.entity.sequence" 
+            title="Sequence Value Item Entity">
+      <field name="seqName" type="id-long-ne"></field>
+      <field name="seqId" type="numeric"></field>
+      <prim-key field="seqName"/>
+    </entity>
+
+    <entity entity-name="Message"
+            package-name="org.ofbiz.samples"
+            default-resource-name=""
+            title="Message Entity">
+      <field name="messageId" type="id-ne"></field>
+      <field name="description" type="description"></field>
+      <prim-key field="messageId"/>
+    </entity>
+
+</entitymodel>
